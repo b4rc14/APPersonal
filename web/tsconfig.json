@@ -1,0 +1,12 @@
+// El frontend corre en el navegador: añadimos los tipos del DOM y el soporte de JSX de React.
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    // "react-jsx": no hace falta importar React en cada archivo para usar JSX.
+    "jsx": "react-jsx",
+    // Tipos de Vite: import.meta.env, importar imágenes/CSS, etc.
+    "types": ["vite/client"]
+  },
+  "include": ["src"]
+}

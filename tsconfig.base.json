@@ -1,0 +1,37 @@
+// Configuración de TypeScript COMÚN a todo el monorepo.
+// Cada paquete (web, api, shared) tiene su propio tsconfig.json que hereda de este
+// con "extends" y solo añade lo específico de su entorno (navegador o Node).
+{
+  "compilerOptions": {
+    // Versión de JavaScript que generamos/asumimos. Node 24 y los navegadores actuales la soportan.
+    "target": "ES2023",
+    "lib": ["ES2023"],
+
+    // Módulos ESM (import/export). "Bundler" permite importar sin extensión (.js/.ts),
+    // que es como trabajan Vite (web) y tsx (api).
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+
+    // Solo usamos tsc para COMPROBAR tipos; quien ejecuta/empaqueta el código es Vite o tsx.
+    "noEmit": true,
+
+    // Modo estricto: obliga a tratar null/undefined y evita "any" implícitos. Clave para aprender bien TS.
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noFallthroughCasesInSwitch": true,
+
+    // Obliga a escribir "import type" para los tipos; así las herramientas que compilan
+    // archivo a archivo (Vite, tsx, Vitest) saben qué imports pueden borrar.
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+
+    // Permite importar archivos .json como módulos.
+    "resolveJsonModule": true,
+
+    // No revisa los tipos de node_modules: acelera mucho el typecheck.
+    "skipLibCheck": true,
+
+    // Evita problemas entre Windows/Linux con mayúsculas en nombres de archivo.
+    "forceConsistentCasingInFileNames": true
+  }
+}

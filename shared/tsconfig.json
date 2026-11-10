@@ -1,0 +1,10 @@
+// shared/ no depende de ningún entorno (ni navegador ni Node): solo TypeScript puro.
+// Así se puede reutilizar tal cual en la web, la API, el servidor MCP y la futura app móvil.
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    // Sin tipos globales de Node ni del DOM: si aquí usas "window" o "process", TS te avisará.
+    "types": []
+  },
+  "include": ["src"]
+}

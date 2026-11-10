@@ -1,0 +1,3 @@
+# Normaliza los saltos de línea a LF en el repositorio (coherente con .editorconfig),
+# para que Windows no convierta los archivos a CRLF y Prettier no se queje.
+* text=auto eol=lf

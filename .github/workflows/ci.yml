@@ -1,0 +1,37 @@
+# Integración continua: en cada push o Pull Request a main, GitHub comprueba
+# que el código pasa el linter, el formato, los tipos y los tests.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      # Descarga el código del repositorio
+      - uses: actions/checkout@v4
+
+      # Instala Node (la misma versión mayor que en local) y cachea las dependencias de npm
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      # "npm ci" instala exactamente lo que dice package-lock.json (reproducible)
+      - run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Formato
+        run: npm run format:check
+
+      - name: Tipos
+        run: npm run typecheck
+
+      - name: Tests
+        run: npm test

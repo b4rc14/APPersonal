@@ -1,0 +1,22 @@
+# Dependencias (se reinstalan con npm install)
+node_modules/
+
+# Código generado al compilar/empaquetar
+dist/
+coverage/
+
+# Variables de entorno reales (pueden contener secretos). Solo se sube el .env.example
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+
+# Archivos del sistema / editor
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/

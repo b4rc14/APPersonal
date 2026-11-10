@@ -1,0 +1,9 @@
+# Archivos que Prettier no debe formatear
+node_modules
+dist
+coverage
+package-lock.json
+
+# Documentos escritos a mano: se respeta su formato original
+README.md
+CLAUDE.md
