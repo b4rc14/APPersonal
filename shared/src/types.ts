@@ -15,8 +15,8 @@ export type Subtask = {
   taskId: string;
   title: string;
   position: number;
-  wheight: number;
-  completedAt: string;
+  weight?: number;
+  completedAt?: string;
 };
 
 export type Project = {
