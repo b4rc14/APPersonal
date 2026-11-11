@@ -22,7 +22,8 @@ APPersonal centraliza todo lo que tengo que hacer, accesible desde cualquier dis
 ## ✨ Funcionalidades
 
 ### Núcleo
-- Crear, editar y eliminar tareas: título, descripción, asignatura o categoría, fecha límite y enlace de entrega.
+- Crear, editar y eliminar tareas: título, descripción, proyecto (opcional), fecha límite, enlace de entrega y estimación inicial.
+- Proyectos creados por el usuario con el nombre y color que quiera (asignaturas, trabajos, partes de una app...), para que la app no se limite a estudiantes.
 - Progreso por tarea, de 0 a 100 %, con barra visual.
 - Vista general ordenada por urgencia, con las entregas próximas resaltadas.
 - Vista de detalle de cada tarea, con el progreso y el tiempo estimado restante.
@@ -43,7 +44,7 @@ Un servidor **MCP (Model Context Protocol)** expone herramientas que Claude pued
 
 | Herramienta | Descripción |
 |---|---|
-| `listar_tareas` | Lista las tareas, con filtros por fecha, estado o asignatura |
+| `listar_tareas` | Lista las tareas, con filtros por fecha, estado o proyecto |
 | `crear_tarea` | Crea una tarea con fecha, enlace, etc. |
 | `actualizar_progreso` | Actualiza el % de avance de una tarea |
 | `ver_tarea` | Devuelve el detalle de una tarea, con el tiempo estimado |
@@ -83,7 +84,10 @@ MCP es un estándar abierto, así que el mismo servidor sirve para otros cliente
 - **MCP primero en local, después en remoto.**
   - *Local*: el servidor corre en mi ordenador y lo usan Claude Desktop o Claude Code. Es gratis y rápido para iterar.
   - *Remoto*: se añade en claude.ai → Ajustes → Conectores, y funciona en web, escritorio y móvil. Requisitos: que el servidor sea **accesible públicamente** (Claude se conecta desde la nube de Anthropic) y que tenga **autenticación OAuth**, para que nadie más acceda a mis tareas.
-- **Alojamiento del backend**: en local durante el desarrollo. Para tener los mismos datos en varios dispositivos se despliega en el servidor de casa (expuesto de forma segura con Cloudflare Tunnel o Tailscale, sin abrir puertos) o en un plan gratuito de Render, Railway o Fly.io.
+- **Alojamiento del backend**: en local durante el desarrollo. Para tener los mismos datos en varios dispositivos se despliega en el servidor de casa (expuesto de forma segura con Cloudflare Tunnel o Tailscale, sin abrir puertos) o en un plan gratuito de **Render** (backend; se duerme tras ~15 min sin tráfico) + **Neon** (PostgreSQL gratuito). Railway y Fly.io ya no tienen plan gratuito real para cuentas nuevas (revisado en noviembre de 2026).
+- **Modelo de datos preparado para varios usuarios desde v1**: cada tarea tiene un usuario dueño, aunque al principio solo exista yo. Así, abrirla a otras personas más adelante (cuentas + OAuth + MCP remoto) no obliga a migrar la base de datos.
+- **Uso por otras personas**: primero mediante *self-hosting* (cada uno ejecuta su copia con sus datos; repo público con licencia MIT, todo lo configurable en `.env`, instrucciones de instalación). Más adelante, si tiene sentido, versión multiusuario en la nube.
+- **MCP con otras IAs**: el servidor es el mismo para cualquier cliente compatible, pero el soporte depende de cada app de IA (Claude: conectores propios; ChatGPT: solo MCP remoto, en Developer Mode y con OAuth 2.1 + Dynamic Client Registration; la app de consumo de Gemini no admite conectores propios).
 - **Sin coste extra en IA.** Usar el conector MCP desde Claude entra en la suscripción y gasta de los límites de uso normales. Que la app llame a Claude por su cuenta (API de Anthropic) se paga por token aparte, así que **las primeras versiones no usan la API**: toda la inteligencia ocurre en el chat.
 - Transporte MCP: **Streamable HTTP**. SSE puede quedar obsoleto.
 
