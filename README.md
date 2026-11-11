@@ -15,7 +15,7 @@ APPersonal centraliza todo lo que tengo que hacer, accesible desde cualquier dis
 - **Barra de progreso** por tarea.
 - **Tiempo estimado restante** al entrar en el detalle de cada tarea.
 - **Notificaciones** de entregas próximas y de tareas que van en riesgo.
-- **Conexión con Claude**: consultar y gestionar las tareas hablando con la IA ("¿qué tengo esta semana?", "marca la práctica de DAW al 60 %").
+- **Conexión con Claude**: consultar y gestionar las tareas hablando con la IA ("¿qué tengo esta semana?", "divídeme la práctica de DAW en partes", "he terminado el CSS de la práctica").
 
 ---
 
@@ -24,7 +24,8 @@ APPersonal centraliza todo lo que tengo que hacer, accesible desde cualquier dis
 ### Núcleo
 - Crear, editar y eliminar tareas: título, descripción, proyecto (opcional), fecha límite, enlace de entrega y estimación inicial.
 - Proyectos creados por el usuario con el nombre y color que quiera (asignaturas, trabajos, partes de una app...), para que la app no se limite a estudiantes.
-- Progreso por tarea, de 0 a 100 %, con barra visual.
+- Cada tarea se divide en **subtareas** (una checklist). El progreso, de 0 a 100 %, **lo calcula la app** a partir de las subtareas completadas (opcionalmente, con un peso por subtarea) y se muestra con una barra visual. El usuario no introduce porcentajes.
+- El estado (pendiente / en curso / completada) se deduce del progreso; "en riesgo" se calcula, no se guarda.
 - Vista general ordenada por urgencia, con las entregas próximas resaltadas.
 - Vista de detalle de cada tarea, con el progreso y el tiempo estimado restante.
 - Diseño pensado para pantalla grande (lista de tareas a un lado y detalle al otro), adaptable a pantallas pequeñas.
@@ -32,8 +33,8 @@ APPersonal centraliza todo lo que tengo que hacer, accesible desde cualquier dis
 ### Estimación del tiempo restante
 Se calcula **sin IA** a partir de la velocidad de avance real:
 
-1. Se registra un historial de actualizaciones de progreso de cada tarea (fecha y porcentaje).
-2. Se calcula la velocidad media, es decir, el % de avance por día o por hora de trabajo.
+1. El historial de avance sale de las subtareas: se guarda la fecha en que se completa cada una (y la fecha de creación de la tarea como punto de partida).
+2. Se calcula la velocidad media, es decir, el % de avance por unidad de tiempo.
 3. Tiempo restante ≈ (100 − progreso actual) / velocidad.
 4. Si aún no hay datos suficientes, se usa una estimación inicial introducida al crear la tarea.
 
@@ -46,7 +47,8 @@ Un servidor **MCP (Model Context Protocol)** expone herramientas que Claude pued
 |---|---|
 | `listar_tareas` | Lista las tareas, con filtros por fecha, estado o proyecto |
 | `crear_tarea` | Crea una tarea con fecha, enlace, etc. |
-| `actualizar_progreso` | Actualiza el % de avance de una tarea |
+| `crear_subtareas` | Divide una tarea en subtareas (Claude propone el desglose) |
+| `completar_subtarea` | Marca una subtarea como hecha ("he terminado el CSS") |
 | `ver_tarea` | Devuelve el detalle de una tarea, con el tiempo estimado |
 | `completar_tarea` / `eliminar_tarea` | Gestión básica |
 
