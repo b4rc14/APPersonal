@@ -4,17 +4,19 @@ export type Task = {
   title: string;
   description?: string;
   projectId?: string;
-  taskCreationDate: string;
+  creationDate: string;
   dueDate: string;
   submissionLink?: string;
   estimatedTimeHours?: number;
 };
 
-export type ProgressUpdate = {
+export type Subtask = {
   id: string;
   taskId: string;
-  taskPercentageDone: number;
-  taskUpdateDate: string;
+  title: string;
+  position: number;
+  wheight: number;
+  completedAt: string;
 };
 
 export type Project = {
