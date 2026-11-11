@@ -5,11 +5,10 @@
 // Constante de ejemplo para comprobar que web y api importan bien este paquete.
 export const APP_NAME = 'APPersonal';
 
-// TODO: definir los tipos comunes del dominio (p. ej. cómo es una tarea y una actualización de progreso).
-
+// Export data types and functions from other files in this package.
+export {calculateProgress} from './progress';
 export type { Task, Subtask, Project } from './types';
 
-// TODO: implementar la estimación del tiempo restante (ver "Estimación del tiempo restante" en el README).
-//       Pista: es una función pura (entran datos, sale un resultado), ideal para escribirla con tests primero.
+
 
 // TODO: validaciones comunes que deban cumplirse igual en el frontend y en la API.

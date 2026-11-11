@@ -7,7 +7,6 @@ export type Task = {
   creationDate: string;
   dueDate: string;
   submissionLink?: string;
-  estimatedTimeHours?: number;
 };
 
 export type Subtask = {
