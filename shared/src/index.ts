@@ -7,6 +7,8 @@ export const APP_NAME = 'APPersonal';
 
 // TODO: definir los tipos comunes del dominio (p. ej. cómo es una tarea y una actualización de progreso).
 
+export type { Task, ProgressUpdate, Project } from './types';
+
 // TODO: implementar la estimación del tiempo restante (ver "Estimación del tiempo restante" en el README).
 //       Pista: es una función pura (entran datos, sale un resultado), ideal para escribirla con tests primero.
 
